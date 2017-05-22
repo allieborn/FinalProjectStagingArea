@@ -6,15 +6,6 @@
 <body>
 <p> Testing Lyft </p>
 
-<com.lyft.lyftbutton.LyftButton
-        android:id="@+id/lyft_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        lyft:lyftStyle="lyftMulberryDark"
-/>
-
-${jsonString} <br>
-${jsonArray}
 
 
 

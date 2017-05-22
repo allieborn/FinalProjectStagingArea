@@ -1,15 +1,12 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Final Project Staging Area</title>
+    <title>Lyft</title>
 </head>
 <body>
-<p> Testing Lyft </p>
 
-
-
-
-
+<p>Second Alternative to Access Lyft</p>
 
 
 
