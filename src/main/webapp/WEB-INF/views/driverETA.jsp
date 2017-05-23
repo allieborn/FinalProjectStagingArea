@@ -1,17 +1,14 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Final Project Staging Area</title>
+    <title>Driver ETA</title>
 </head>
 <body>
-<p> Testing Lyft </p>
 
+<p>Driver ETA</p>
 
-
-
-
-
-
+${driverETA}
 
 
 </body>
