@@ -1,17 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Lyft Prices</title>
+    <title>Estimated Lyft Prices</title>
 </head>
 <body>
-<p> Lyft Prices </p>
+<p> Estimated Lyft Prices </p>
 
+${displayPriceMin}
 
+<p></p>
 
-${prices}
-
-
-
+${displayPriceMax}
 
 
 </body>

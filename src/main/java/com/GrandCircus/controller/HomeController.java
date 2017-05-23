@@ -19,7 +19,7 @@ import java.util.List;
 public class HomeController {
 
     @RequestMapping("/")
-    public String lyftPrices(Model model) { //CODE FOR LYFT PRICES
+    public String lyftPrices(Model model) { //CODE FOR EST MIN/MAX PRICE FOR RIDE; BEFORE PURCHASE
 
         ApiConfig apiConfig = new ApiConfig.Builder()
                 .setClientId("mZOUI6oBEYPd")
@@ -31,13 +31,17 @@ public class HomeController {
             Response<CostEstimateResponse> results = costEstimateCall.execute();
             CostEstimateResponse body = results.body();
             List<CostEstimate> prices = body.cost_estimates;
-            String displayPrice = "";
-           // for (CostEstimate i : prices) { //does this need to be a regular for loop?
-            for (int i = 0; i < prices.size(); i++ ){
-               displayPrice += (prices.get(i));
-                //System.out.println(String.valueOf(i.estimated_distance_miles)); DOCS SEEM TO SUGGEST THIS FORMAT
+            String displayPriceMin = "";
+            String displayPriceMax = "";
+
+            for(CostEstimate costEstimate : body.cost_estimates){ //tried 'prices' rather than 'body' but didn't like....
+                displayPriceMin = (String.valueOf(costEstimate.estimated_cost_cents_min/100) + " $");
+                displayPriceMax = (String.valueOf(costEstimate.estimated_cost_cents_max/100) + " $");
             }
-            model.addAttribute("prices", displayPrice);
+
+            model.addAttribute("displayPriceMin", displayPriceMin);
+            model.addAttribute("displayPriceMax", displayPriceMax);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +50,7 @@ public class HomeController {
     }
 
     @RequestMapping("/driverETA")
-    public String lyftTime(Model model) { //CODE FOR driver ETA
+    public String lyftTime(Model model) { //CODE FOR DRIVER ETA
 
         ApiConfig apiConfig = new ApiConfig.Builder()
                 .setClientId("mZOUI6oBEYPd")
@@ -59,9 +63,11 @@ public class HomeController {
             EtaEstimateResponse body = results.body();
             List<Eta> time = body.eta_estimates;
             String displayTime = "";
-            for (int i = 0; i < time.size(); i++ ){
-                displayTime += (time.get(i));
+
+            for(Eta eta : body.eta_estimates){
+                displayTime = (String.valueOf(eta.eta_seconds/60) + " min");
             }
+
             model.addAttribute("driverETA", displayTime);
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +77,7 @@ public class HomeController {
     }
 
     @RequestMapping("/rideTypes")
-    public String lyftRideTypes(Model model) { //CODE FOR LYFT Ride types
+    public String lyftRideTypes(Model model) { //code for lyft ride types
 
         ApiConfig apiConfig = new ApiConfig.Builder()
                 .setClientId("mZOUI6oBEYPd")
@@ -96,7 +102,7 @@ public class HomeController {
     }
 
     @RequestMapping("/nearbyDriver")
-    public String nearybyD(Model model) { //CODE FOR nearby driver
+    public String nearybyD(Model model) { //CODE FOR DISTANCE IN MILES AND MINUTES OF DRIVER FROM CUSTOMER, BEFORE PICKUP
 
         ApiConfig apiConfig = new ApiConfig.Builder()
                 .setClientId("mZOUI6oBEYPd")
@@ -109,12 +115,21 @@ public class HomeController {
 
             NearbyDriversResponse body = results.body();
             List<NearbyDriversByRideType> places = body.nearby_drivers;
-            String displayPlaces="";
-            for (int i =0; i<places.size();i++) {
+          //  String displayPlaces = "";
+            String displayPlaces2 = "";
 
-                displayPlaces += (places.get(i));
+//            for (int i =0; i<places.size();i++) { //THIS PRINTS ALL RIDERS IN ONE STRING
+//                displayPlaces += (places.get(i));
+//            }
+
+            NearbyDriversByRideType result = results.body().nearby_drivers.get(0); //THIS PRINTS ONLY ONE DRIVER AVAILABLE
+            for(NearbyDriver driver : result.drivers) {                            // BUT BETTER FORMATTING
+                displayPlaces2 += (driver.locations.toString());
             }
-            model.addAttribute("driverNearby",displayPlaces);
+
+           // model.addAttribute("displayPlaces",displayPlaces);
+            model.addAttribute("displayPlaces2", displayPlaces2);
+
 
         } catch (IOException e) {
             e.printStackTrace();
