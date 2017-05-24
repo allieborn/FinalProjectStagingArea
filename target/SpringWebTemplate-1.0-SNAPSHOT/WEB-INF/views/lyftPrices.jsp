@@ -4,13 +4,22 @@
     <title>Estimated Lyft Prices</title>
 </head>
 <body>
-<p> Estimated Lyft Prices </p>
+<p> Lyft Standard Prices </p>
 
 ${displayPriceMin}
 
 <p></p>
 
 ${displayPriceMax}
+
+
+<p>Lyft Plus Prices</p>
+
+${displayPriceMinPlus}
+
+<p></p>
+
+${displayPriceMaxPlus}
 
 
 </body>
